@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'no_hp' => $validated = ['no_hp'],
+            'no_hp' => $validated['no_hp'],
             'foto' => $validated['foto'] ?? null,
             'password' => $validated['password'], // Otomatis di-hash oleh cast 'hashed' di Model User
         ]);
