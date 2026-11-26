@@ -91,8 +91,8 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'sucess' => true,
-            'message' => 'Berhasil keluar dan token telah dihapus dari server.'
+            'success' => true,
+            'message' => 'Berhasil keluar dan token telah dihapus dari server.',
         ], 200);
     }
 }
