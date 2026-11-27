@@ -9,7 +9,6 @@ sed -ri "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/g" /etc/apache2/sites-ava
 
 # Ensure storage directories & public symlink exist
 mkdir -p /var/www/html/storage/app/public/profiles
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 php artisan storage:link --force || true
 
 # Run database migrations automatically
@@ -18,6 +17,11 @@ php artisan migrate --force || true
 # Cache routes & config for production
 php artisan config:cache || true
 php artisan route:cache || true
+
+# Artisan runs as root and may create root-owned logs/cache; hand ownership to Apache's user
+mkdir -p /var/www/html/storage/logs
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R ug+rwX /var/www/html/storage /var/www/html/bootstrap/cache
 
 exec apache2-foreground
 
